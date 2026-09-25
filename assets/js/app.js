@@ -13,8 +13,7 @@
     defaultMode:     'orbit',   // 'orbit' | 'normal'
     motionIntensity: 8,         // 1 – 10
     starDensity:     1,         // 0.3 – 1.6
-    nebulaHue:       285,       // 180 – 330
-    githubUser:      ''         // e.g. 'talhaayyaz' → auto-fills the CODE cards
+    nebulaHue:       285        // 180 – 330
   };
 
   /* ── gesture feel ─────────────────────────────────────────────────── */
@@ -136,7 +135,6 @@
       if (self.mode === 'orbit') self.setMode('normal');
     }, 9000);
 
-    this.loadRepos();
   };
 
   Portfolio.prototype.buildDial = function () {
@@ -771,56 +769,6 @@
     this.stars.rotation.y = t * 0.004;
     this.stars.rotation.z = t * 0.002;
     this.renderer.render(this.scene, this.camera);
-  };
-
-  /* ── optional: live GitHub repos ──────────────────────────────────── */
-
-  Portfolio.prototype.loadRepos = function () {
-    var user = (CONFIG.githubUser || '').trim();
-    var host = document.getElementById('repos');
-    if (!user || !host) return;
-
-    fetch('https://api.github.com/users/' + encodeURIComponent(user) + '/repos?sort=updated&per_page=6')
-      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
-      .then(function (repos) {
-        if (!Array.isArray(repos) || !repos.length) return;
-        host.innerHTML = '';
-        repos.slice(0, 6).forEach(function (repo) {
-          var a = document.createElement('a');
-          a.className = 'repo';
-          a.href = repo.html_url;
-          a.target = '_blank';
-          a.rel = 'noopener';
-
-          var flag = document.createElement('p');
-          flag.className = 'repo__flag';
-          flag.textContent = repo.fork ? 'FORK' : 'REPO';
-
-          var name = document.createElement('h3');
-          name.className = 'repo__name';
-          name.textContent = repo.name;
-
-          var desc = document.createElement('p');
-          desc.className = 'repo__desc';
-          desc.textContent = repo.description || 'No description yet.';
-
-          var meta = document.createElement('p');
-          meta.className = 'repo__meta';
-          var lang = document.createElement('span');
-          lang.textContent = (repo.language || 'CODE').toUpperCase();
-          var stars = document.createElement('span');
-          stars.textContent = '★ ' + repo.stargazers_count;
-          meta.appendChild(lang);
-          meta.appendChild(stars);
-
-          a.appendChild(flag);
-          a.appendChild(name);
-          a.appendChild(desc);
-          a.appendChild(meta);
-          host.appendChild(a);
-        });
-      })
-      .catch(function () { /* keep the placeholder cards */ });
   };
 
   /* ── go ───────────────────────────────────────────────────────────── */

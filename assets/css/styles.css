@@ -446,6 +446,7 @@ code {
 .split__main { gap: 22px; }
 
 .frame {
+  position: relative;
   border: 1px solid var(--line);
   display: flex;
   align-items: flex-end;
@@ -454,6 +455,15 @@ code {
 }
 .frame--portrait { aspect-ratio: 4 / 5; max-width: 260px; }
 .frame--shot { aspect-ratio: 4 / 3; padding: 12px; border-color: rgba(255, 255, 255, 0.1); }
+.profile-mark {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -52%);
+  font: 600 clamp(54px, 7vw, 92px)/1 var(--display);
+  letter-spacing: -0.08em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(233, 232, 242, 0.34);
+}
 .frame__hint {
   font: 400 9px/1.5 var(--mono);
   letter-spacing: 0.12em;
@@ -566,6 +576,58 @@ code {
 }
 .project .body { font-size: clamp(14px, 1.3vw, 16px); line-height: 1.65; }
 
+.project-visual {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  min-height: 190px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 72% 28%, rgba(150, 113, 255, 0.28), transparent 34%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.045) 0 2px, transparent 2px 10px),
+    rgba(9, 12, 26, 0.72);
+}
+.project-visual::after {
+  content: '';
+  position: absolute;
+  width: 42%;
+  aspect-ratio: 1;
+  right: -7%;
+  bottom: -24%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  box-shadow: 0 0 55px rgba(132, 88, 255, 0.2);
+}
+.project-visual--web {
+  background:
+    linear-gradient(125deg, transparent 24%, rgba(97, 225, 214, 0.13) 24% 27%, transparent 27% 58%, rgba(150, 113, 255, 0.14) 58% 61%, transparent 61%),
+    rgba(9, 12, 26, 0.76);
+}
+.project-visual--java {
+  background:
+    radial-gradient(circle at 28% 64%, rgba(255, 143, 102, 0.17), transparent 30%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 26px),
+    rgba(9, 12, 26, 0.76);
+}
+.project-visual__code,
+.project-visual__label {
+  position: relative;
+  z-index: 1;
+  font: 400 9px/1.4 var(--mono);
+  letter-spacing: 0.15em;
+  color: var(--dim);
+}
+.project-visual__mark {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  font: 600 clamp(38px, 5vw, 68px)/1 var(--display);
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(233, 232, 242, 0.48);
+}
+.project-visual__label { color: var(--accent-soft); }
+
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chips li {
   padding: 6px 11px;
@@ -669,6 +731,12 @@ a.repo:hover { border-color: var(--accent); background: rgba(14, 18, 38, 0.82); 
 @media (max-width: 420px) {
   .nav a { padding: 8px 8px; }
   .mode-toggle { padding: 9px 13px; font-size: 9px; letter-spacing: 0.12em; }
+}
+
+@media (max-width: 520px) {
+  .grid-cells--contact { grid-template-columns: 1fr; }
+  .nav { gap: 0; padding: 4px; }
+  .nav a { padding: 8px 7px; font-size: 8px; letter-spacing: 0.06em; }
 }
 
 /* short landscape phones: keep the planet reachable, shrink the copy */
